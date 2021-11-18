@@ -1,0 +1,15 @@
+.fr-model {
+  padding: 25px;
+}
+.fr-model > *{
+  margin: 15px;
+}
+
+@media screen and (max-width: 992px) {
+  .fr-model {
+    padding: 10px;
+  }
+  .fr-model > *{
+    margin: 5px;
+  }
+}
