@@ -1,6 +1,7 @@
 #testimonials {
   padding: 50px 20px;
   position: relative;
+  background-color: var(--secondary-color);
 }
 #testimonials > .slide {
   padding: 10px;
@@ -20,7 +21,7 @@
 .comment{
     margin: 10px;
     padding: 10px;
-    background-color: var(--secondary-color);
+    background-color: var(--third-color);
 }
 .comment > * {
     margin: 10px;

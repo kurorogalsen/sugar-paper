@@ -1,0 +1,42 @@
+.fr-btn {
+  padding: 5px 25px;
+  text-transform: uppercase;
+  font-size: 1em;
+  border: 2px solid var(--primary-color);
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: var(--primary-color);
+  transition: 0.4s ease-in-out;
+  color: var(--white-color);
+}
+.fr-btn:hover {
+  background-color: transparent;
+  color: var(--primary-color);
+}
+.title > h3{
+  text-transform: uppercase;
+  position: relative;
+  z-index: 100;
+  padding: 5px;
+  margin-bottom: 15px;
+  font-size: 1.7rem;
+}
+.title > h3:before{
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 100%;
+  left: 0%;
+  bottom: 0%;
+  background-color: var(--primary-color);
+}
+@media screen and (max-width: 992px) {
+  .fr-btn {
+    padding: 3px 15px;
+    font-size: 0.9em;
+  }
+  .title > h3{
+    font-size: 1rem;
+  }
+}

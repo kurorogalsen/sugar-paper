@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Catalogue from "./pages/Catalogue";
+import Panier from "./pages/Panier";
+import Admin from "./pages/Admin";
+import ScrollToTop from "./components/ScrollToTop";
+import Errorhttp from "./pages/Errorhttp";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
+import React from "react";
+import "./styles/sugar.css";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="fr-app">
+      <Router>
+        <Header />
+
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/home" exact>
+            <Home />
+          </Route>
+          <Route path="/sugar-paper" exact>
+            <Home />
+          </Route>
+          <Route path="/panier" exact>
+            <Panier />
+          </Route>
+          <Route path="/admin" exact>
+            <Admin />
+          </Route>
+          <Route path="/catalogue/:name" exact>
+            <Catalogue />
+          </Route>
+          <Route path="/">
+            <Errorhttp />
+          </Route>
+        </Switch>
+        <ScrollToTop />
+
+        <Footer />
+      </Router>
     </div>
   );
 }

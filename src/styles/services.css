@@ -1,0 +1,10 @@
+#services{
+    padding: 15px;
+}
+.service-img{
+    padding: 25px;
+}
+.service-img > img {
+    border-radius: 100%;
+    border: 5px solid var(--primary-color);
+}

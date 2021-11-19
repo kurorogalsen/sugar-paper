@@ -1,17 +1,6 @@
 .news-img {
   position: relative;
 }
-.news-no-img > h2,
-.news-img > h2 {
-  position: absolute;
-  z-index: 100;
-  top: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 5px;
-  margin: 0px;
-  background-color: var(--primary-color);
-}
 .news-no-img {
   position: relative;
 }
@@ -20,14 +9,11 @@
   z-index: 100;
   bottom: 10%;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  height: fit-content;
+  transform: translate(-50%, -50%);
 }
 @media screen and (max-width: 992px) {
-  .news-no-img > h2,
-  .news-img > h2 {
-    position: relative;
-    font-size: 1.1em;
-  }
   .new-cta {
     position: absolute;
     z-index: 100;

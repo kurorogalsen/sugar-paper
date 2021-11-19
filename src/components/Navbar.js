@@ -12,50 +12,19 @@ function Navbar() {
   const ctgList = [
     {
       id: 0,
-      name: "hommes",
-      sousCtg: [
-        {
-          id: 0,
-          name: "hauts",
-          parent: "hommes",
-        },
-        {
-          id: 1,
-          name: "pantalons",
-          parent: "hommes",
-        },
-        {
-          id: 2,
-          name: "cravate",
-          parent: "hommes",
-        },
-      ],
+      name: "Imprimantes alimentaires",
     },
     {
       id: 1,
-      name: "femmes",
-      sousCtg: [
-        {
-          id: 0,
-          name: "robes",
-          parent: "femmes",
-        },
-        {
-          id: 1,
-          name: "pantalons",
-          parent: "femmes",
-        },
-      ],
+      name: "Impression comestible",
     },
     {
       id: 3,
-      name: "autres",
-      sousCtg: null,
+      name: "Matériel non comestible",
     },
     {
       id: 4,
-      name: "accessoires",
-      sousCtg: null,
+      name: "Matériel comestible",
     },
   ];
   const [menuMob, setmenuMob] = useState(false);
@@ -77,7 +46,23 @@ function Navbar() {
         <li className="fr-li">
           <Link to="/home"> ACCUEIL </Link>
         </li>
-        <DynamicLinks list={ctgList} />
+        <li className="fr-li">
+          <Linkscroll to="services" smooth={true} duration={1000}>
+            SERVICES
+          </Linkscroll>
+        </li>
+
+        <li className="fr-li">
+          PRODUITS
+          <ul className="fr-dropdown row">
+            <DynamicLinks list={ctgList} />
+          </ul>
+        </li>
+        <li className="fr-li">
+          <Linkscroll to="propos" smooth={true} duration={1000}>
+            A PROPOS
+          </Linkscroll>
+        </li>
         <li className="fr-li">
           <Linkscroll to="footer" smooth={true} duration={1000}>
             CONTACT
@@ -95,13 +80,34 @@ function Navbar() {
           alt="exit-btn"
         />
 
-        <Link to="/La-francoise">
+        <Link to="/home">
           <li className="fr-li"> ACCUEIL </li>
         </Link>
+        <Linkscroll
+          onClick={changeMenu}
+          to="services"
+          smooth={true}
+          duration={1000}
+        >
+          <li className="fr-li"> SERVICES </li>
+        </Linkscroll>
 
         <DynamicMobLinks list={ctgList} />
 
-        <Linkscroll to="footer" smooth={true} duration={1000}>
+        <Linkscroll
+          onClick={changeMenu}
+          to="propos"
+          smooth={true}
+          duration={1000}
+        >
+          <li className="fr-li"> A PROPOS </li>
+        </Linkscroll>
+        <Linkscroll
+          onClick={changeMenu}
+          to="footer"
+          smooth={true}
+          duration={1000}
+        >
           <li className="fr-li"> CONTACT </li>
         </Linkscroll>
       </ul>
