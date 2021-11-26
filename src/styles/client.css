@@ -1,0 +1,11 @@
+.client-card>div {
+    padding: 5px;
+    background-color: var(--grey-color);
+    border: 1px solid var(--black-color);
+    word-break: break-all;
+    text-align: left;
+}
+
+.client-card {
+    padding: 5px;
+}

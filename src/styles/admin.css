@@ -1,0 +1,136 @@
+#admin-home {
+    background-color: var(--white-color);
+    padding: 50px;
+    --blue-color: #0d6efd;
+    --danger-color: #dc3545;
+    --success-color: #198754;
+    margin-top: 50px;
+}
+
+#admin-home>* {
+    margin-bottom: 50px;
+}
+
+.action-btn {
+    outline: none;
+    border-radius: 3px;
+    color: white;
+    padding: 5px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.action-btn-primary {
+    background-color: var(--blue-color);
+    border: 1px solid var(--blue-color);
+}
+
+.action-btn-danger {
+    background-color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+}
+
+.action-btn-success {
+    background-color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+#admin-menu {
+    box-shadow: 0px 0px 5px var(--black-color);
+    border-radius: 10px;
+}
+
+#admin-menu>header {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-radius: 10px 10px 0px 0px;
+    padding: 5px;
+}
+
+#admin-menu>nav>ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#admin-menu>nav>ul>li {
+    padding: 5px;
+    border-bottom: 1px var(--grey-color) solid;
+    transition: 0.4s ease-in-out;
+    cursor: pointer;
+}
+
+#admin-menu>nav>ul>li:last-child {
+    border-bottom: 0px var(--grey-color) solid;
+}
+
+#admin-menu>nav>ul>li:hover {
+    background-color: var(--secondary-color);
+}
+
+.menu-list {
+    list-style: none;
+}
+
+#admin-info {
+    padding: 5px;
+}
+
+.admin-list {
+    border: 1px solid black;
+}
+
+.admin-list>header {
+    background-color: var(--primary-color);
+}
+
+.ligne>* {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+#admin-action>div>.action>form {
+    padding: 5px;
+    display: flex;
+    margin-bottom: 15px;
+    border: 1px solid black;
+    text-align: right;
+}
+
+#admin-action>div>.action>form>*, #admin-action>div>.action>form>*>* {
+    padding: 5px;
+    margin: 5px;
+}
+
+#admin-action>div>.action>form>input, #admin-action>div>.action>form>*>input {
+    display: flex;
+    width: fit-content;
+    border: 1px solid black;
+}
+
+@media screen and (max-width: 992px) {
+    #admin-home {
+        padding: 5px;
+    }
+}
+
+#admin>div {
+    min-height: 70vh;
+}
+
+#admin-form {
+    border: 1px solid var(--primary-color);
+    margin: 5px;
+    padding: 15px;
+}
+
+#admin-form>* {
+    padding: 10px;
+}
+
+#admin-form>input {
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    margin: 15px 0px;
+}
