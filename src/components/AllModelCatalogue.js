@@ -1,19 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
+import axios from "axios";
+import notloading from "./../assets/models/notloading.webp";
+function AllModelCatalogue({ ctg }) {
 
-function AllModelCatalogue({ models, ctg }) {
-  console.log(ctg);
+  /* GET ARTICLES */
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([])
+  const [refresh, setRefresh] = useState(true)
 
-  const urlImg = "https://galsendigitalagency.com/francoise/";
-  return models.map(
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const { data: response } = await axios.get('https://sugar-paper.com/article', {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          }
+        });
+        setData(response);
+      } catch (error) {
+        console.error(error.message);
+      }
+      setLoading(false);
+    }
+    setRefresh(false)
+    fetchData();
+  }, [refresh]);
+
+  /* GET CATEGORIES TO FILTER */
+  const [dataCtg, setDataCtg] = useState([])
+
+  const allCtgF = () => {
+    axios.get('http://sugar-paper.com/categorie').then((response) => {
+      setDataCtg(response.data);
+      console.log(response.data);
+    }).catch(error => console.log(error));
+  }
+
+  useEffect(() => {
+    allCtgF();
+  }, [])
+
+  let id_ctg;
+  dataCtg.map((category) => (
+    category.nom_categorie === ctg ? id_ctg = category.id : ""
+  ));
+
+  /* LocalStorage gestion */
+  const addCart = (id) => {
+    if (!localStorage[id]) {
+      localStorage.setItem(id, 1)
+    }
+  }
+  return data.map(
     (model) =>
-      model.category === ctg && (
-        <div className="fr-card col-6 col-md-3 column">
-          <div className="container">
-            <img src={urlImg + model.id + ".webp"} alt={model.title} />
-            <h3>{model.title}</h3>
-          </div>
-          <p>{model.description}</p>
-          <p>{model.price} CFA</p>
+      model.id_categorie === id_ctg && (
+        <div key={model.id} className="fr-card column column-top">
+          {loading && <div>Loading...</div>}
+          {!loading && (
+            <div className="container column column-top">
+              <div>
+                <img src={model.img_article ? model.img_article : notloading} alt={model.nom_article} />
+              </div>
+              <h3>{model.nom_article}</h3>
+              <p>{model.description}</p>
+              <p>{model.prix_article} CFA</p>
+              <button onClick={() => { addCart(model.id) }} className="fr-btn">Ajouter</button>
+            </div>
+          )}
         </div>
       )
   );

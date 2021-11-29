@@ -1,0 +1,72 @@
+.panier-article {
+    width: 400px;
+    height: 650px;
+    padding: 15px;
+    margin: 5px;
+    border: 1px solid rgba(34, 34, 34, 0.418);
+    border-radius: 5px;
+}
+
+.panier-article>.container>.container {
+    border-bottom: 1px solid black;
+    padding: 5px 0px;
+}
+
+.panier-article>.container>.container:last-child {
+    border-bottom: 0px solid black;
+}
+
+.panier-article>div:first-child {
+    height: 400px;
+}
+
+.panier-article>div>img {
+    object-fit: cover;
+    height: 100%;
+}
+
+#payment {
+    background-color: var(--third-color);
+}
+#payment > *, #payment > * > *,  #payment > * > * > *{
+    margin: 5px;
+}
+#customer_info{
+    background-color: var(--grey-color);
+    margin-top: 30px;
+}
+#inscription > form > div > div{
+    margin-bottom: 10px;
+}
+#inscription > form, #connexion > form{
+    padding: 10px;
+}
+#inscription > form > div > div > input,  #connexion > form > div > input{
+    padding: 5px 7px;
+    margin: 5px;
+    outline: none;
+    background-color: var(--white-color);
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    font-size: 1rem;
+}
+.label {
+    padding-left: 10px!important;
+}
+@media screen and (max-width: 992px) {
+    .panier-article {
+        width: 170px;
+        height: 400px;
+        padding: 5px;
+        margin: 3px;
+        border: 1px solid rgba(34, 34, 34, 0.418);
+        font-size: 0.8em;
+    }
+
+    .panier-article>div:first-child {
+        height: 200px;
+    }
+
+    .action-container>div>.action-btn {
+        padding: 3px 7px;
+    }
+}

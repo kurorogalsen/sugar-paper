@@ -11,7 +11,7 @@ function CrudCollection() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const { data: response } = await axios.get('https://mossanegroup.com/collection', {
+                const { data: response } = await axios.get('https://sugar-paper.com/collection', {
                     headers: {
                         'Access-Control-Allow-Origin': '*',
                     }
@@ -30,7 +30,7 @@ function CrudCollection() {
 
         e.preventDefault();
         let ctg_name = document.getElementById("ctg-name").value;
-        axios.post('https://mossanegroup.com/collection', {
+        axios.post('https://sugar-paper.com/collection', {
             nom_collection: ctg_name,
         })
             .then(function (response) {
@@ -46,7 +46,7 @@ function CrudCollection() {
     function deleteCtg(e) {
         e.preventDefault();
         let ctg_id = document.getElementById("ctg-id-delete").value;
-        axios.delete(`https://mossanegroup.com/collection/${ctg_id}`);
+        axios.delete(`https://sugar-paper.com/collection/${ctg_id}`);
         setRefresh(true);
         document.getElementById("ctg-id-delete").value = "";
     }
@@ -55,7 +55,7 @@ function CrudCollection() {
         e.preventDefault();
         let ctg_id = document.getElementById("ctg-id-rename").value;
         let ctg_name = document.getElementById("ctg-name-rename").value;
-        axios.put(`https://mossanegroup.com/collection/${ctg_id}`, {
+        axios.put(`https://sugar-paper.com/collection/${ctg_id}`, {
             nom_collection: ctg_name,
         });
         setRefresh(true);

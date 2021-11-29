@@ -1,6 +1,5 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from 'react'
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { Link as Linkscroll } from "react-scroll";
 import DynamicLinks from "./DynamicLinks";
@@ -9,24 +8,27 @@ import menu from "./../assets/icons/menu.png";
 import exit from "./../assets/icons/exit.png";
 import logo from "./../assets/logo.png";
 function Navbar() {
-  const ctgList = [
-    {
-      id: 0,
-      name: "Imprimantes alimentaires",
-    },
-    {
-      id: 1,
-      name: "Impression comestible",
-    },
-    {
-      id: 3,
-      name: "Matériel non comestible",
-    },
-    {
-      id: 4,
-      name: "Matériel comestible",
-    },
-  ];
+  let ctgList = null;
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: response } = await axios.get('https://sugar-paper.com/categorie', {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          }
+        });
+        setData(response);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+    fetchData();
+  }, []);
+
+  ctgList = data;
+
   const [menuMob, setmenuMob] = useState(false);
   const changeMenu = () => {
     setmenuMob(!menuMob);
@@ -37,6 +39,7 @@ function Navbar() {
       document.querySelector("#mob-navbar").style.right = "0%";
     } else document.querySelector("#mob-navbar").style.right = "100%";
   }, [menuMob]);
+
   return (
     <div>
       <div className="row" id="bg-button">
@@ -55,7 +58,7 @@ function Navbar() {
         <li className="fr-li">
           PRODUITS
           <ul className="fr-dropdown row">
-            <DynamicLinks list={ctgList} />
+            {ctgList === null ? " " : <DynamicLinks list={ctgList} />}
           </ul>
         </li>
         <li className="fr-li">
@@ -92,7 +95,8 @@ function Navbar() {
           <li className="fr-li"> SERVICES </li>
         </Linkscroll>
 
-        <DynamicMobLinks list={ctgList} />
+        
+        {ctgList === null ? " " : <DynamicMobLinks list={ctgList} />}
 
         <Linkscroll
           onClick={changeMenu}

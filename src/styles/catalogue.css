@@ -10,26 +10,27 @@
   position: relative;
   padding: 50px;
   transition: 0.4s ease-in-out;
+  width: 300px;
+  height: 500px;
 }
-.fr-card > .container {
+.fr-card > .container > div{
   position: relative;
+  height: 300px;
 }
-.fr-card > .container > h3 {
-  position: absolute;
-  z-index: 1;
-  bottom: 0%;
-  left: 0%;
-  width: 100%;
-  padding: 15px 0px;
-  background-color: rgba(235, 235, 235, 0.664);
-  font-size: 1.1rem;
+.fr-card > .container > *{
+  padding: 5px;
+}
+.fr-card > .container > div > img{
+  object-fit: cover;
+  height: 100%;
+}
+.fr-card > .container > .fr-btn{
+  margin: 10px;
+  font-size: 0.9em;
 }
 @media screen and (max-width: 1500px) {
   .fr-card {
     padding: 25px;
-  }
-  .fr-card > .container > h3 {
-    font-size: 1.05rem;
   }
 }
 @media screen and (max-width: 992px) {
@@ -41,11 +42,17 @@
   .fr-card {
     padding: 10px;
   }
-  .fr-card > .container > h3 {
-    font-size: 0.8rem;
-  }
-
   .fr-card > p {
     font-size: 0.8em;
+  }
+  .fr-card {
+    width: 175px;
+    height: 400px;
+  }
+  .fr-card > .container > div{
+    height: 175px;
+  }
+  .fr-card {
+    font-size: 0.7em;
   }
 }
