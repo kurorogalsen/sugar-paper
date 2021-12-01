@@ -5,7 +5,7 @@ import "./../styles/panier.css";
 
 function Panier() {
 
-    /* GET CATEGORIES TO FILTER */
+    /* GET ARTICLES */
     const [dataArticle, setdataArticle] = useState([])
     const [load, setLoad] = useState()
     const allArticle = () => {
@@ -13,7 +13,6 @@ function Panier() {
         axios.get('http://sugar-paper.com/article').then((response) => {
             setdataArticle(response.data);
             setLoad(false);
-
         }).catch(error => console.log(error));
     }
 
@@ -27,11 +26,20 @@ function Panier() {
         localStorage[article.id] ? total += localStorage[article.id] * article.prix_article : ""
     ))
 
+    /* Calcul TOTAL FUNCTION */
+    function calculTotal() {
+        let total = 0;
+        dataArticle.map((article) => (
+            localStorage[article.id] ? total += localStorage[article.id] * article.prix_article : ""
+        ))
+        document.getElementById("total-panier").innerHTML = total + " CFA";
+    }
+
     /* Increment */
     const increment = (id, qt) => {
         localStorage.setItem(id, qt + 1);
         allArticle();
-
+        calculTotal();
     }
 
     /* Decrement */
@@ -40,14 +48,15 @@ function Panier() {
             localStorage.setItem(id, qt - 1);
         }
         allArticle();
+        calculTotal();
     }
 
     /* Remove */
     const remove = (id) => {
         localStorage.removeItem(id)
         allArticle();
+        calculTotal();
     }
-
 
     /* Infos validation */
     const [valid, setvalid] = useState(false)
@@ -98,16 +107,117 @@ function Panier() {
         }
     }
     function inscription(e) {
-        if(validation(e)){
-            setAccount(true);
-        }        
-    }
-    function lookingAccount(e) {
-        e.preventDefault();
+        if (validation(e)) {
+            const name = document.querySelector('#nom').value;
+            const mail = document.querySelector('#mail').value;
+            const tel = document.querySelector('#tel').value;
+            const adresse = document.querySelector('#adresse').value;
+            const passwd = document.querySelector('#password').value;
+
+            axios.post('https://sugar-paper.com/client', {
+                prenom_nom_client: name,
+                email_client: mail,
+                tel_client: tel,
+                adresse_client: adresse,
+                passwd: passwd
+            }).then(function (response) {
+                console.log(response);
+                if (response.status === 201) {
+                    setAccount(true);
+                }
+                else {
+                    alert("Il existe déjà un compte avec ces identifiants. Ientifiants oubliés ?Veuillez contacter votre service client.");
+                }
+            }).catch(function (error) {
+                console.log(error);
+                alert("Il s'est passé quelque chose d'anormal !");
+
+            });
+
+
+        }
     }
 
     const [account, setAccount] = useState(true);
 
+    const [accountlist, setAccountlist] = useState([])
+
+    useEffect(() => {
+        // GET request using axios inside useEffect React hook
+        axios.get('https://sugar-paper.com/client')
+            .then(response => setAccountlist(response.data));
+        console.log(accountlist);
+    }, [account]);
+
+    const [articlepanier, setArticlepanier] = useState([])
+
+    function articlesPanier() {
+        let listID = [];
+        let quantite = [];
+        dataArticle.map((article) => (
+            localStorage[article.id] ? listID[listID.length] = article.id : ""
+        ))
+        dataArticle.map((article) => (
+            localStorage[article.id] ? quantite[quantite.length] = localStorage[article.id] : ""
+        ))
+        for (let i = 0; i < listID.length; i++) {
+            articlepanier[i] = {
+                "id": parseInt(listID[i]),
+                "quantite": parseInt(quantite[i])
+            }
+        }
+    }
+
+    function validerCommande(id, e) {
+        e.preventDefault();
+        setvalid(true);
+        articlesPanier();
+        console.log("Articles panier");
+        console.log(articlepanier);
+        axios.post('https://sugar-paper.com/commande', {
+            articles: articlepanier,
+            total_commande: parseInt(total),
+            mode_paiement: "À la livraison",
+            id_client: parseInt(id),
+            status: "Reçu"
+        })
+            .then(res => {
+                console.log(res.data + 'this is data after api call');
+            })
+            .catch(err => console.log(err));
+        localStorage.clear();
+        calculTotal();
+        allArticle();
+        setvalid(false);
+    }
+
+    /* const [connecte, setConnecte] = useState(false); */
+
+    function LookingAccount(e) {
+        e.preventDefault();
+        let tel_connexion = document.getElementById("tel_connexion").value;
+        let password_connexion = document.getElementById("password_connexion").value;
+
+        axios.get('https://sugar-paper.com/client')
+            .then(response => setAccountlist(response.data));
+        console.log(accountlist);
+
+        accountlist.map((compte) => (
+            (compte.tel_client === tel_connexion && compte.passwd === password_connexion) ? setvalid(true) : ""
+        ))
+        if(valid === false){
+            alert("Aucun compte ne correspond aux identifiants entrés");
+        }
+    }
+    function envoiCommande(e) {
+        e.preventDefault();
+        let tel_connexion = document.getElementById("tel_connexion").value;
+        let password_connexion = document.getElementById("password_connexion").value;
+        accountlist.map((compte) => (
+            (compte.tel_client === tel_connexion && compte.passwd === password_connexion) ? validerCommande(compte.id, e) : ""
+        ))
+
+    }
     return (
         <div className="container row row-top">
             <div className="title container row">
@@ -125,7 +235,7 @@ function Panier() {
                             localStorage[article.id] ?
                                 <div key={article.id} className="panier-article column column-top">
                                     <div>
-                                        <img src={article.img_article ? article.img_article : notloading} alt={article.nom_article} />
+                                        <img src={article.url_img_article ? article.url_img_article : notloading} alt={article.nom_article} />
                                     </div>
                                     <div className="container column column-top">
                                         <div className="container row row-left">
@@ -176,24 +286,25 @@ function Panier() {
                 </div>
                     : ""
                 }
-                {account ? <div id="connexion" className="container column">
-                    <h3>CONNEXION</h3>
-                    <form style={{ display: `${valid ? "none" : "flex"}` }} className="col-12 col-md-9 col-lg-8 col-xl-7 col-xxl-6 row">
-                        <div className="container row row-left">
-                            <label className="label container row row-left" for="tel_connexion">Téléphone</label>
-                            <input required className="container row row-left" id="tel_connexion" pattern="[0-9]{12}" type="tel" placeholder="Format: 221777777777" />
-                        </div>
-                        <div className="container row row-left">
-                            <label className="label container row row-left" for="password_connexion">Mot De Passe</label>
-                            <input required className="container row row-left" id="password_connexion" type="password" placeholder="Mot de passe" />
-                        </div>
-                        <button type="submit" onClick={(e) => { lookingAccount(e) }} style={{ marginTop: "25px" }} className="fr-btn">Suivant {' >'}</button>
-                        <div className="container row">
-                            <div style={{ color: "rgba(0, 0, 0, 0.544)", padding: "10px", fontSize: "0.8rem", cursor: "pointer", textDecoration: "underline" }} className="row" onClick={() => { setAccount(false) }}>Vous n'avez pas de compte ?</div>
-                            <a href="https://api.whatsapp.com/send/?phone=221773292123&text&app_absent=0" style={{ color: "rgba(0, 0, 0, 0.544)", padding: "10px", fontSize: "0.8rem", cursor: "pointer", textDecoration: "underline" }} className="row" target="_blank" rel="noreferrer">Vous avez oublié votre mot de passe ?</a>
-                        </div>
-                    </form>
-                </div>
+                {account ?
+                    <div style={{ display: `${valid ? "none" : "flex"}` }} id="connexion" className="container column">
+                        <h3>CONNEXION</h3>
+                        <form className="col-12 col-md-9 col-lg-8 col-xl-7 col-xxl-6 row">
+                            <div className="container row row-left">
+                                <label className="label container row row-left" for="tel_connexion">Téléphone</label>
+                                <input required className="container row row-left" id="tel_connexion" pattern="[0-9]{12}" type="tel" placeholder="Format: 221777777777" />
+                            </div>
+                            <div className="container row row-left">
+                                <label className="label container row row-left" for="password_connexion">Mot De Passe</label>
+                                <input required className="container row row-left" id="password_connexion" type="password" placeholder="Mot de passe" />
+                            </div>
+                            <button type="submit" onClick={(e) => { LookingAccount(e) }} style={{ marginTop: "25px" }} className="fr-btn">Suivant {' >'}</button>
+                            <div className="container row">
+                                <div style={{ color: "rgba(0, 0, 0, 0.544)", padding: "10px", fontSize: "0.8rem", cursor: "pointer", textDecoration: "underline" }} className="row" onClick={() => { setAccount(false) }}>Vous n'avez pas de compte ?</div>
+                                <a href="https://api.whatsapp.com/send/?phone=221773292123&text&app_absent=0" style={{ color: "rgba(0, 0, 0, 0.544)", padding: "10px", fontSize: "0.8rem", cursor: "pointer", textDecoration: "underline" }} className="row" target="_blank" rel="noreferrer">Vous avez oublié votre mot de passe ?</a>
+                            </div>
+                        </form>
+                    </div>
                     :
                     <div id="inscription" className="container column">
                         <form style={{ display: `${valid ? "none" : "flex"}` }} className="col-12 col-md-9 col-lg-8 col-xl-7 col-xxl-6 row row-top">
@@ -216,7 +327,7 @@ function Panier() {
                             </div>
                             <div className="column column-top col-12 col-md-6">
                                 <div className="container row row-left">
-                                    <label className="label container row row-left" for="tel">Adresse Physique</label>
+                                    <label className="label container row row-left" for="adresse">Adresse Physique</label>
                                     <input required className="container row row-left" id="adresse" type="text" placeholder="Adresse physique..." />
                                 </div>
                                 <div className="container row row-left">
@@ -250,7 +361,7 @@ function Panier() {
                                 <option value="À la livraison" selected>À la livraison</option>
                                 <option value="À la livraison" disabled>Mobile Money (à venir)</option>
                             </select>
-                            <button className="fr-btn"> Valider la commande </button>
+                            <button onClick={(e) => { envoiCommande(e) }} className="fr-btn"> Valider la commande </button>
                         </form>
                     </div>
                 }

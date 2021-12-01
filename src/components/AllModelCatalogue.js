@@ -27,6 +27,15 @@ function AllModelCatalogue({ ctg }) {
     fetchData();
   }, [refresh]);
 
+  /* Calcul TOTAL */
+  function calculTotal() {
+    let total = 0;
+    data.map((article) => (
+      localStorage[article.id] ? total += localStorage[article.id] * article.prix_article : ""
+    ))
+    return (total + " CFA");
+  }
+
   /* GET CATEGORIES TO FILTER */
   const [dataCtg, setDataCtg] = useState([])
 
@@ -49,7 +58,8 @@ function AllModelCatalogue({ ctg }) {
   /* LocalStorage gestion */
   const addCart = (id) => {
     if (!localStorage[id]) {
-      localStorage.setItem(id, 1)
+      localStorage.setItem(id, 1);
+      document.getElementById("total-panier").innerHTML = calculTotal();
     }
   }
   return data.map(
@@ -60,7 +70,7 @@ function AllModelCatalogue({ ctg }) {
           {!loading && (
             <div className="container column column-top">
               <div>
-                <img src={model.img_article ? model.img_article : notloading} alt={model.nom_article} />
+                <img style={{border: "1px solid rgba(0, 0, 0, 0.678)", borderRadius: "2px"}} src={model.url_img_article ? model.url_img_article : notloading} alt={model.nom_article} />
               </div>
               <h3>{model.nom_article}</h3>
               <p>{model.description}</p>

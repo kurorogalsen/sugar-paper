@@ -33,53 +33,21 @@ function CrudArticle() {
 
     /* **************************************************************** */
 
-    const [image, setImage] = useState([]);
-
-    const onSubmit = async e => {
-        e.preventDefault();
-        let data = new FormData();
-        console.log(image + ' ' + 'this is image pathname');
-        data.append('image', image);
-
-        const name = document.querySelector('#article-name-add').value;
-        const price = parseInt(document.querySelector('#article-price-add').value);
-        const ctg = parseInt(document.querySelector('#article-category-add').value);
-
-        axios.post('https://sugar-paper.com/article', {
-            nom_article: name,
-            prix_article: price,
-            id_categorie: ctg,
-            description: "description à compléter"
-        })
-            .then(res => {
-                console.log(res.data + 'this is data after api call');
-            })
-            .catch(err => console.log(err));
-    };
-
-    /* **************************************************************** */
-
     function ajouterArticle(e) {
 
         e.preventDefault();
-        const imageData = new FormData();
-        const imagefile = document.querySelector('#article-img-add').files[0];
-        imageData.append("data", imagefile);
-
         const name = document.querySelector('#article-name-add').value;
         const price = parseInt(document.querySelector('#article-price-add').value);
         const ctg = parseInt(document.querySelector('#article-category-add').value);
-
-        console.log(imageData['data']);
-        /* const id_ctg = document.querySelector('#article-category-add'); */
-
+        const imageurl = document.querySelector('#article-img-add').value;
+        const description = document.querySelector('#article-description-add').value;
 
         axios.post('https://sugar-paper.com/article', {
             nom_article: name,
             prix_article: price,
+            url_img_article: imageurl,
             id_categorie: ctg,
-            img_article: imageData,
-            description: "description bidon"
+            description: description
         }).then(function (response) {
             console.log(response);
         }).catch(function (error) {
@@ -88,8 +56,13 @@ function CrudArticle() {
 
         setRefresh(true);
         document.getElementById("article-name-add").value = "";
+        document.getElementById("article-price-add").value = "";
+        document.getElementById("article-category-add").value = "";
+        document.getElementById("article-img-add").value = "";
+        document.getElementById("article-description-add").value = "";
     }
 
+    /* **************************************************************** */
 
     function deleteCtg(e) {
         e.preventDefault();
@@ -98,6 +71,40 @@ function CrudArticle() {
         setRefresh(true);
         document.getElementById("article-id-delete").value = "";
     }
+
+    /* **************************************************************** */
+    function updateArticle(e) {
+
+        e.preventDefault();
+        const name = document.querySelector('#article-name-rename').value;
+        const price = parseInt(document.querySelector('#article-price-rename').value);
+        const ctg = parseInt(document.querySelector('#article-category-rename').value);
+        const id = parseInt(document.querySelector('#article-id-rename').value);
+        const imageurl = document.querySelector('#article-img-rename').value;
+        const description = document.querySelector('#article-description-rename').value;
+
+        const url = 'https://sugar-paper.com/article/' + id
+        axios.put(url, {
+            nom_article: name,
+            prix_article: price,
+            url_img_article: imageurl,
+            id_categorie: ctg,
+            description: description
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        setRefresh(true);
+        document.getElementById("article-name-rename").value = "";
+        document.getElementById("article-price-rename").value = "";
+        document.getElementById("article-category-rename").value = "";
+        document.getElementById("article-img-rename").value = "";
+        document.getElementById("article-description-rename").value = "";
+        document.getElementById("article-id-rename").value = "";
+    }
+
     return (
         <div className="container column">
             <header className="container row row-between title">
@@ -109,12 +116,15 @@ function CrudArticle() {
                 <form id="rename-article" className="container row row-right">
                     <h4>Modifier un article</h4>
                     <div className="container row row-right">
-                        <input type="number" name="id" placeholder="id" required />
-                        <input type="text" name="libelle" placeholder="Nouveau nom" required />
-                        <input type="number" name="prix" placeholder="Prix" required />
+                        <input id="article-id-rename" type="number" name="id" placeholder="id" required />
+                        <input id="article-name-rename" type="text" name="libelle" placeholder="Nouveau nom" required />
+                        <input id="article-price-rename" type="number" name="prix" placeholder="Prix" required />
                     </div>
                     <div className="container row row-right">
-                        <label for="id_ctg_input">Catégorie</label>
+                        <textarea className="col-12 col-md-9 col-xxl-6" placeholder="Description" id="article-description-rename"></textarea>
+                    </div>
+                    <div className="container row row-right">
+                        <label for="article-category-rename">Catégorie</label>
                         <select id="article-category-rename" required>
                             {
                                 totalCtg.map((ctg) => (
@@ -131,11 +141,11 @@ function CrudArticle() {
                     <div className="container row row-right">
 
                         <label for="article-img-rename">URL Image</label>
-                        <input id="article-img-rename" type="text" value="https://www" />
+                        <input className="col-12 col-md-10" id="article-img-rename" type="text" />
                     </div>
 
                     <div className="container row row-right">
-                        <button className="action-btn action-btn-primary"> Modifier</button>
+                        <button className="action-btn action-btn-primary" onClick={(e) => { updateArticle(e) }}> Modifier</button>
                     </div>
                 </form>
 
@@ -145,12 +155,15 @@ function CrudArticle() {
                     <button className="action-btn action-btn-danger" onClick={(e) => { deleteCtg(e) }}> Supprimer</button>
                 </form>
 
-                <form id="add-article" onSubmit={e => onSubmit(e)} className="container row row-right">
+                <form id="add-article" onSubmit={e => ajouterArticle(e)} className="container row row-right">
                     <h4>Ajouter un article</h4>
 
                     <div className="container row row-right">
                         <input id="article-name-add" type="text" name="libelle" placeholder="Nom" required />
                         <input id="article-price-add" type="number" name="prix" placeholder="Prix" required />
+                    </div>
+                    <div className="container row row-right">
+                        <textarea className="col-12 col-md-9 col-xxl-6" placeholder="Description" id="article-description-add"></textarea>
                     </div>
                     <div className="container row row-right">
                         <label for="article-category-add">Catégorie</label>
@@ -168,7 +181,7 @@ function CrudArticle() {
                     </div>
                     <div className="container row row-right">
                         <label for="article-img-add">URL Image</label>
-                        <input id="article-img-add" type="text" value="https://www" />
+                        <input className="col-12 col-md-10" id="article-img-add" type="text" />
                     </div>
                     <div className="container row row-right">
                         <button className="action-btn action-btn-success" /* onClick={(e) => { ajouterArticle(e) }} */> Ajouter</button>
@@ -183,28 +196,37 @@ function CrudArticle() {
                         Liste articles
                     </div>
                 </header>
-                <div className="container row row-left">
+                <div style={{ fontSize: "0.85rem" }} className="container row-top row row-left">
                     {loading && <div>Loading...</div>}
                     {!loading && (
                         data.map((element) => (
-                            <div key={element.id} style={{ border: "1px solid black" }} className="card col-6 col-md-4 col-xl-3 column">
-                                <img className="container" src={element.url_img_article ? element.url_img_article : notloading} alt={element.nom_article} />
-                                <div style={{ padding: "5px" }} className="container row">
-                                    ID: {element.id}
-                                </div>
-                                <div style={{ padding: "5px" }} className="container row">
-                                    Catégorie: {element.id_categorie}
-                                    {totalCtg.map((ctg) => (
-                                        <div key={ctg.id} className="container row">
-                                            {ctg.id === element.id_categorie ? ctg.nom_categorie : ""}
+                            <div style={{padding:"5px"}} className="col-6 col-md-4 col-xl-3 column">
+                                <div key={element.id} style={{ border: "1px solid black", textAlign: "left", marginBottom: "5px" }} className="card container column">
+                                    <img className="container" src={element.url_img_article ? element.url_img_article : notloading} alt={element.nom_article} />
+                                    <div style={{ padding: "5px", textAlign: "left", borderBottom: "1px solid rgba(0, 0, 0, 0.4)" }} className="container row row-left">
+                                        ID Article : {element.id}
+                                    </div>
+                                    <div style={{ padding: "5px", textAlign: "left", borderBottom: "1px solid rgba(0, 0, 0, 0.4)" }} className="container row row-left">
+                                        Nom : {element.nom_article}
+                                    </div>
+                                    <div style={{ textAlign: "left", borderBottom: "1px solid rgba(0, 0, 0, 0.4)" }} className="container row row-left">
+                                        <div className="container row row-left" style={{ padding: "5px", textAlign: "left", borderBottom: "1px solid rgba(0, 0, 0, 0.4)" }}>
+                                            ID Catégorie : {element.id_categorie}
                                         </div>
-                                    ))}
-                                </div>
-                                <div style={{ padding: "5px" }} className="container row">
-                                    Prix: {element.prix_article}
-                                </div>
-                                <div style={{ padding: "5px" }} className="container row">
-                                    Description: {element.description}
+                                        {totalCtg.map((ctg) => (
+                                            ctg.id === element.id_categorie ?
+                                                <div style={{ padding: "5px" }} key={ctg.id} className="container row row-left">
+                                                    Nom Catégorie : {ctg.nom_categorie}
+                                                </div>
+                                                : ""
+                                        ))}
+                                    </div>
+                                    <div style={{ padding: "5px", textAlign: "left", borderBottom: "1px solid rgba(0, 0, 0, 0.4)" }} className="container row row-left">
+                                        Prix: {element.prix_article} CFA
+                                    </div>
+                                    <div style={{ padding: "5px", textAlign: "left" }} className="container row row-left">
+                                        Description: {element.description}
+                                    </div>
                                 </div>
                             </div>
                         ))

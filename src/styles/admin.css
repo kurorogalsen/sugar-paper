@@ -89,7 +89,7 @@ html {
 }
 
 .ligne>* {
-    border: 1px solid black;
+    border-bottom: 1px solid black;
     padding: 3px;
 }
 
@@ -110,6 +110,23 @@ html {
     display: flex;
     width: fit-content;
     border: 1px solid black;
+}
+
+#article-img-add, #article-img-rename {
+    width: 100% !important;
+}
+
+.command-card {
+    text-align: left;
+    border: 1px solid black;
+    padding: 4px!important;
+    word-break: break-word;
+    background: rgb(255, 194, 199);
+    background: linear-gradient(145deg, rgba(255, 194, 199, 1) 0%, rgba(235, 98, 151, 1) 100%);
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px black;
+    font-weight: bold;
+    letter-spacing: 0.015rem;
 }
 
 @media screen and (max-width: 992px) {

@@ -1,5 +1,5 @@
-import React from "react";
-import Navbar from "./Navbar";
+import React, { useEffect, useState } from 'react'
+import axios from "axios"; import Navbar from "./Navbar";
 import logo from "./../assets/logo.png";
 import loupe from "./../assets/icons/loupe.png";
 import cart from "./../assets/icons/cart.png";
@@ -7,6 +7,28 @@ import { Link } from "react-router-dom";
 import "./../styles/header.css";
 
 function Header() {
+
+  /* GET ARTICLES */
+  const [dataArticle, setdataArticle] = useState([])
+  const allArticle = () => {
+    axios.get('http://sugar-paper.com/article').then((response) => {
+      setdataArticle(response.data);
+    }).catch(error => console.log(error));
+  }
+
+  useEffect(() => {
+    allArticle();
+  }, [])
+
+  /* Calcul TOTAL */
+  let total = 0;
+  dataArticle.map((article) => (
+    localStorage[article.id] ? total += localStorage[article.id] * article.prix_article : ""
+  ))
+
+  function rechercher(e) {
+    e.preventDefault();
+  }
   return (
     <header id="header" className="container column">
       <span id="scrollUpAnchor"></span>
@@ -25,7 +47,7 @@ function Header() {
         <form className="row-between" id="search-bar">
           <input type="search" placeholder="Rechercher un produit..." />
           <button type="submit">
-            <img width="20" src={loupe} alt="loupe" />
+            <img onClick={(e) => { rechercher(e) }} width="20" src={loupe} alt="loupe" />
           </button>
         </form>
 
@@ -33,7 +55,7 @@ function Header() {
           <Link to="/panier">
             <img width="20" src={cart} alt="panier" />
           </Link>
-          <div>0 XOF</div>
+          <div id="total-panier">{total} {'CFA'}</div>
         </div>
 
         <div id="header-sm" className="row">
@@ -75,7 +97,7 @@ function Header() {
           </a>
         </div>
       </div>
-      <nav style={{backgroundColor:"var(--primary-color)"}} className="container row">
+      <nav style={{ backgroundColor: "var(--primary-color)" }} className="container row">
         <Navbar />
       </nav>
     </header>
