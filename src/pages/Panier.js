@@ -8,17 +8,24 @@ function Panier() {
     /* GET ARTICLES */
     const [dataArticle, setdataArticle] = useState([])
     const [load, setLoad] = useState()
-    const allArticle = () => {
-        setLoad(true);
-        axios.get('http://sugar-paper.com/article').then((response) => {
-            setdataArticle(response.data);
-            setLoad(false);
-        }).catch(error => console.log(error));
-    }
+    const [refresh, setRefresh] = useState(true)
 
     useEffect(() => {
-        allArticle();
-    }, [])
+        const fetchData = async () => {
+            setLoad(true);
+            try {
+                const { data: response } = await axios.get('https://sugar-paper.com/article');
+                setdataArticle(response);
+            } catch (error) {
+                console.error(error.message);
+            }
+            setLoad(false);
+        }
+        fetchData();
+    }, [refresh]);
+
+
+    /* **************************** */
 
     /* Calcul TOTAL */
     let total = 0;
@@ -38,7 +45,7 @@ function Panier() {
     /* Increment */
     const increment = (id, qt) => {
         localStorage.setItem(id, qt + 1);
-        allArticle();
+        setRefresh(!refresh);
         calculTotal();
     }
 
@@ -47,14 +54,14 @@ function Panier() {
         if (qt >= 1) {
             localStorage.setItem(id, qt - 1);
         }
-        allArticle();
+        setRefresh(!refresh);
         calculTotal();
     }
 
     /* Remove */
     const remove = (id) => {
         localStorage.removeItem(id)
-        allArticle();
+        setRefresh(!refresh);
         calculTotal();
     }
 
@@ -187,7 +194,7 @@ function Panier() {
             .catch(err => console.log(err));
         localStorage.clear();
         calculTotal();
-        allArticle();
+        setRefresh(!refresh);
         setvalid(false);
     }
 

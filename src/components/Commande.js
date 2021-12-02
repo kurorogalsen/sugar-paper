@@ -2,11 +2,24 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios";
 
 function Commande() {
+
+    function malformedJSON2Array(tar) {
+        let arr = [];
+        tar = tar.replace(/^\{|\}$/g, '').split(',');
+        for (var i = 0, cur, pair; cur = tar[i]; i++) {
+            arr[i] = {};
+            pair = cur.split(':');
+            arr[i][pair[0]] = /^\d*$/.test(pair[1]) ? +pair[1] : pair[1];
+        }
+        return arr;
+    }
+
     const [loading, setLoading] = useState(true);
     const [commande, setCommande] = useState([])
     const [client, setClient] = useState([])
     const [article, setArticle] = useState([])
     const [refresh, setRefresh] = useState(true);
+    const [articlecommande, setArticlecommande] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,11 +37,19 @@ function Commande() {
     }, [refresh]);
 
     useEffect(() => {
+        for (let i = 0; i < commande.length; i++) {
+            setArticlecommande(malformedJSON2Array(commande[i].articles))
+        }
+        console.log(articlecommande);
+    }, [commande]);
+
+    useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
                 const { data: response } = await axios.get('https://sugar-paper.com/client');
                 setClient(response);
+
             } catch (error) {
                 console.error(error.message);
             }
@@ -101,19 +122,19 @@ function Commande() {
                                     <div style={{ borderBottom: "1px solid black", padding: "10px 0px" }} className="container row row-left">
                                         <h4 style={{ textDecoration: "underline" }}>Articles commandés:</h4>
                                         {
-                                            /* commande.articles.map((item) => (
+                                            articlecommande.map((item) => (
                                                 article.map((produit) => (
                                                     produit.id === item.article ?
                                                         <div className="container row row-left">
-                                                            {produit.nom_article} ( {item.quantite} ) = { item.quantite *  produit.prix_article}
+                                                            {produit.nom_article} ( {item.quantite} ) = {item.quantite * produit.prix_article}
                                                         </div>
                                                         : ""
                                                 ))
-                                            )) */
+                                            ))
                                         }
                                     </div>
                                     <div style={{ borderBottom: "1px solid black", padding: "10px 0px" }} className="container row row-left">
-                                        Total = { commande.total_commande } CFA
+                                        Total = {commande.total_commande} CFA
                                     </div>
                                     <div style={{ padding: "10px 0px" }} className="container row">
                                         <button onClick={(e) => { deleteCommande(e, commande.id) }} className="action-btn action-btn-danger"> Supprimer la commande </button>

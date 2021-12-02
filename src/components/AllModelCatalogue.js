@@ -12,11 +12,7 @@ function AllModelCatalogue({ ctg }) {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: response } = await axios.get('https://sugar-paper.com/article', {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          }
-        });
+        const { data: response } = await axios.get('https://sugar-paper.com/article');
         setData(response);
       } catch (error) {
         console.error(error.message);
@@ -37,18 +33,16 @@ function AllModelCatalogue({ ctg }) {
   }
 
   /* GET CATEGORIES TO FILTER */
+
   const [dataCtg, setDataCtg] = useState([])
-
-  const allCtgF = () => {
-    axios.get('http://sugar-paper.com/categorie').then((response) => {
-      setDataCtg(response.data);
-      console.log(response.data);
-    }).catch(error => console.log(error));
-  }
-
   useEffect(() => {
-    allCtgF();
-  }, [])
+    // GET request using axios inside useEffect React hook
+    axios.get('https://sugar-paper.com/categorie')
+      .then(response => setDataCtg(response.data));
+
+    // empty dependency array means this effect will only run once (like componentDidMount in classes)
+  }, []);
+
 
   let id_ctg;
   dataCtg.map((category) => (
@@ -62,6 +56,12 @@ function AllModelCatalogue({ ctg }) {
       document.getElementById("total-panier").innerHTML = calculTotal();
     }
   }
+
+  useEffect(() => {
+    console.log(dataCtg);
+    console.log(data);
+  }, [dataCtg, data])
+
   return data.map(
     (model) =>
       model.id_categorie === id_ctg && (
@@ -70,7 +70,7 @@ function AllModelCatalogue({ ctg }) {
           {!loading && (
             <div className="container column column-top">
               <div>
-                <img style={{border: "1px solid rgba(0, 0, 0, 0.678)", borderRadius: "2px"}} src={model.url_img_article ? model.url_img_article : notloading} alt={model.nom_article} />
+                <img style={{ border: "1px solid rgba(0, 0, 0, 0.678)", borderRadius: "2px" }} src={model.url_img_article ? model.url_img_article : notloading} alt={model.nom_article} />
               </div>
               <h3>{model.nom_article}</h3>
               <p>{model.description}</p>
