@@ -62,7 +62,7 @@ function Lastmodels() {
   }
 
   return (
-    <div className="container row">
+    <div className="container row row-top">
       {loading && <div>Loading...</div>}
       {!loading &&
         articlesCtg.map((model) => (

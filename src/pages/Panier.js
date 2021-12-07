@@ -195,6 +195,9 @@ function Panier() {
         calculTotal();
         setRefresh(!refresh);
         setvalid(false);
+        document.getElementById("tel_connexion").style.border = "1px solid rgba(0, 0, 0, 0.144)";
+        document.getElementById("password_connexion").style.border = "1px solid rgba(0, 0, 0, 0.144)";
+        document.getElementById("popup_commande").style.top = "0%";
     }
 
     /* const [connecte, setConnecte] = useState(false); */
@@ -210,7 +213,6 @@ function Panier() {
         accountlist.map((compte) => (
             (compte.tel_client === tel_connexion && compte.passwd === encryptermdp(password_connexion)) ? setvalid(true) : ""
         ))
-        console.log(valid);
         if (valid === false) {
             document.getElementById("tel_connexion").style.border = "red 1px solid";
             document.getElementById("password_connexion").style.border = "red 1px solid";
@@ -223,10 +225,20 @@ function Panier() {
         accountlist.map((compte) => (
             (compte.tel_client === tel_connexion && compte.passwd === encryptermdp(password_connexion)) ? validerCommande(compte.id, e) : ""
         ))
-
+    }
+    function fermerPopup(e) {
+        e.preventDefault();
+        document.getElementById("popup_commande").style.top = "-100%";
     }
     return (
         <div className="container row row-top">
+
+            <div id="popup_commande">
+                Votre commande a été envoyé. Vous allez bientôt être contacté! <br />
+                <div onClick={(e) => { fermerPopup(e) }} style={{ textDecoration: "underline" }}>
+                    Fermer
+                </div>
+            </div>
             <div className="title container row">
                 <h3>Panier</h3>
             </div>

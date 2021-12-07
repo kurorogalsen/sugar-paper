@@ -13,12 +13,11 @@ function Commande() {
         }
         return arr;
     }
-
+/* 
     const objecttest = '[{ "id": "0", "txt": "zero"},{ "id": "1", "txt": "one"}]';
-
     let affff = JSON.parse(objecttest);
-    console.log(affff);
-
+    console.log(affff[1].txt);
+ */
     const [loading, setLoading] = useState(true);
     const [commande, setCommande] = useState([])
     const [client, setClient] = useState([])

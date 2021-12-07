@@ -52,6 +52,18 @@
 .label {
     padding-left: 10px!important;
 }
+#popup_commande{
+    position: fixed;
+    z-index: 7000;
+    width: 100%;
+    left: 0%;
+    top: -100%;
+    background-color: rgb(23, 135, 23);
+    color: white;
+    margin: 0px;
+    padding: 5px;
+    transition: 0.4s ease-in-out;
+}
 @media screen and (max-width: 992px) {
     .panier-article {
         width: 170px;
