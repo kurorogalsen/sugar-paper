@@ -12,81 +12,6 @@ function Home() {
     img: { baniere },
     cta: "Découvrir nos services",
   };
-  const models = [
-    {
-      id: 0,
-      title: "Modèle fatima gold",
-      imgUrl: "",
-      category: "femmes",
-      sousCategory: null,
-      description: "Description à compléter",
-      price: 19500,
-    },
-    {
-      id: 1,
-      title: "Modèle Mamadou grey",
-      imgUrl: "",
-      category: "hommes",
-      sousCategory: "hauts",
-      description: "Description à compléter",
-      price: 16750,
-    },
-    {
-      id: 2,
-      title: "Modèle Sofia green",
-      imgUrl: "",
-      category: "femmes",
-      sousCategory: null,
-      description: "Description à compléter",
-      price: 21500,
-    },
-    {
-      id: 3,
-      title: "Modèle Amy flowers",
-      imgUrl: "",
-      category: "femmes",
-      sousCategory: null,
-      description: "Description à compléter",
-      price: 15000,
-    },
-  ];
-  const modelshome = [
-    {
-      id: 0,
-      title: "Kit imprimante alimentaire",
-      imgUrl: " ",
-      category: "kit-imprimantes",
-      description: "Description à compléter",
-      price: 19500,
-    },
-    {
-      id: 1,
-      title: "Papillons comestibles",
-      imgUrl: " ",
-      category: "produits-comestibles",
-      description: "Description à compléter",
-      price: 16750,
-    },
-    {
-      id: 2,
-      title: "Pâte à sucre",
-      imgUrl: " ",
-      category: "produits-comestibles",
-      sousCategory: null,
-      description: "Description à compléter",
-      price: 7500,
-    },
-    {
-      id: 3,
-      title: "Ensemble douille",
-      imgUrl: " ",
-      category: "produits-non-comestibles",
-      sousCategory: null,
-      description: "Description à compléter",
-      price: 5000,
-    },
-  ];
-  console.log(news[0]);
   return (
     <main id="main">
       <Baniere new={news} />
@@ -96,7 +21,7 @@ function Home() {
         <div className="title container row">
           <h3>Quelques produits</h3>
         </div>
-        <Lastmodels models={modelshome} />
+        <Lastmodels />
       </section>
       <Testimonials />
     </main>

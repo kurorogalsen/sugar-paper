@@ -1,5 +1,7 @@
 import React from "react";
 import "./../styles/news.css";
+import { Link } from "react-scroll";
+
 function News(props) {
   if (props.new.img != null) {
     return (
@@ -9,7 +11,11 @@ function News(props) {
           src={props.new.img.baniere}
           alt={props.new.text}
         />
-        <button className="fr-btn new-cta"> {props.new.cta} </button>
+        <button className="fr-btn new-cta">
+          <Link to="services" smooth={true} duration={1000}>
+            {props.new.cta}
+          </Link>
+        </button>
       </div>
     );
   } else {

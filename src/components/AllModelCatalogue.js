@@ -39,7 +39,6 @@ function AllModelCatalogue({ ctg }) {
     // GET request using axios inside useEffect React hook
     axios.get('https://sugar-paper.com/categorie')
       .then(response => setDataCtg(response.data));
-
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
 
@@ -56,11 +55,6 @@ function AllModelCatalogue({ ctg }) {
       document.getElementById("total-panier").innerHTML = calculTotal();
     }
   }
-
-  useEffect(() => {
-    console.log(dataCtg);
-    console.log(data);
-  }, [dataCtg, data])
 
   return data.map(
     (model) =>
@@ -80,7 +74,7 @@ function AllModelCatalogue({ ctg }) {
           )}
         </div>
       )
-  );
+  )
 }
 
 export default AllModelCatalogue;

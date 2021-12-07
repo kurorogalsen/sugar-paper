@@ -128,7 +128,7 @@ function CrudArticle() {
                         <select id="article-category-rename" required>
                             {
                                 totalCtg.map((ctg) => (
-                                    <option value={ctg.id}>{ctg.nom_categorie}</option>
+                                    <option key={ctg.id} value={ctg.id}>{ctg.nom_categorie}</option>
                                 ))
                             }
                         </select>
@@ -170,7 +170,7 @@ function CrudArticle() {
                         <select id="article-category-add" required>
                             {
                                 totalCtg.map((ctg) => (
-                                    <option value={ctg.id}>{ctg.nom_categorie}</option>
+                                    <option key={ctg.id} value={ctg.id}>{ctg.nom_categorie}</option>
                                 ))
                             }
                         </select>
@@ -200,7 +200,7 @@ function CrudArticle() {
                     {loading && <div>Loading...</div>}
                     {!loading && (
                         data.map((element) => (
-                            <div style={{padding:"5px"}} className="col-6 col-md-4 col-xl-3 column">
+                            <div key={element.id} style={{ padding: "5px" }} className="col-6 col-md-4 col-xl-3 column">
                                 <div key={element.id} style={{ border: "1px solid black", textAlign: "left", marginBottom: "5px" }} className="card container column">
                                     <img className="container" src={element.url_img_article ? element.url_img_article : notloading} alt={element.nom_article} />
                                     <div style={{ padding: "5px", textAlign: "left", borderBottom: "1px solid rgba(0, 0, 0, 0.4)" }} className="container row row-left">

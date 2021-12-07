@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import notloading from "./../assets/models/notloading.webp";
 import "./../styles/panier.css";
+import bcrypt from 'bcryptjs'
 
 function Panier() {
-
+    function encryptermdp(mdp) {
+        const hashedPassword = bcrypt.hashSync(mdp, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
+        return hashedPassword;
+    }
     /* GET ARTICLES */
     const [dataArticle, setdataArticle] = useState([])
     const [load, setLoad] = useState()
@@ -67,6 +71,9 @@ function Panier() {
 
     /* Infos validation */
     const [valid, setvalid] = useState(false)
+    const [account, setAccount] = useState(true);
+    const [accountlist, setAccountlist] = useState([])
+    // VALIDATION DES CHAMPS
     function validation(e) {
         e.preventDefault();
         let name = document.getElementById("nom").value;
@@ -114,6 +121,7 @@ function Panier() {
         }
     }
     function inscription(e) {
+        setAccount(false);
         if (validation(e)) {
             const name = document.querySelector('#nom').value;
             const mail = document.querySelector('#mail').value;
@@ -126,28 +134,21 @@ function Panier() {
                 email_client: mail,
                 tel_client: tel,
                 adresse_client: adresse,
-                passwd: passwd
+                passwd: encryptermdp(passwd)
             }).then(function (response) {
                 console.log(response);
                 if (response.status === 201) {
                     setAccount(true);
                 }
                 else {
-                    alert("Il existe déjà un compte avec ces identifiants. Ientifiants oubliés ?Veuillez contacter votre service client.");
+                    alert("Il existe déjà un compte avec ces identifiants. Identifiants oubliés? Veuillez contacter votre service client.");
                 }
             }).catch(function (error) {
                 console.log(error);
                 alert("Il s'est passé quelque chose d'anormal !");
-
             });
-
-
         }
     }
-
-    const [account, setAccount] = useState(true);
-
-    const [accountlist, setAccountlist] = useState([])
 
     useEffect(() => {
         // GET request using axios inside useEffect React hook
@@ -179,8 +180,6 @@ function Panier() {
         e.preventDefault();
         setvalid(true);
         articlesPanier();
-        console.log("Articles panier");
-        console.log(articlepanier);
         axios.post('https://sugar-paper.com/commande', {
             articles: articlepanier,
             total_commande: parseInt(total),
@@ -207,13 +206,14 @@ function Panier() {
 
         axios.get('https://sugar-paper.com/client')
             .then(response => setAccountlist(response.data));
-        console.log(accountlist);
 
         accountlist.map((compte) => (
-            (compte.tel_client === tel_connexion && compte.passwd === password_connexion) ? setvalid(true) : ""
+            (compte.tel_client === tel_connexion && compte.passwd === encryptermdp(password_connexion)) ? setvalid(true) : ""
         ))
-        if(valid === false){
-            alert("Aucun compte ne correspond aux identifiants entrés");
+        console.log(valid);
+        if (valid === false) {
+            document.getElementById("tel_connexion").style.border = "red 1px solid";
+            document.getElementById("password_connexion").style.border = "red 1px solid";
         }
     }
     function envoiCommande(e) {
@@ -221,7 +221,7 @@ function Panier() {
         let tel_connexion = document.getElementById("tel_connexion").value;
         let password_connexion = document.getElementById("password_connexion").value;
         accountlist.map((compte) => (
-            (compte.tel_client === tel_connexion && compte.passwd === password_connexion) ? validerCommande(compte.id, e) : ""
+            (compte.tel_client === tel_connexion && compte.passwd === encryptermdp(password_connexion)) ? validerCommande(compte.id, e) : ""
         ))
 
     }
@@ -280,6 +280,7 @@ function Panier() {
                     <h3>Informations De Livraison</h3>
                 </div>
                 {valid ? <div style={{ padding: "15px" }} className="container">
+                    {console.log(valid)}
                     <div className="container">
                         Vos informations ont été enregistrées avec succès 🎉
                     </div>
@@ -299,7 +300,7 @@ function Panier() {
                         <form className="col-12 col-md-9 col-lg-8 col-xl-7 col-xxl-6 row">
                             <div className="container row row-left">
                                 <label className="label container row row-left" for="tel_connexion">Téléphone</label>
-                                <input required className="container row row-left" id="tel_connexion" pattern="[0-9]{12}" type="tel" placeholder="Format: 221777777777" />
+                                <input required className="container row row-left" id="tel_connexion" pattern="[0-9]{12}" type="tel" placeholder="Format: 773292123" />
                             </div>
                             <div className="container row row-left">
                                 <label className="label container row row-left" for="password_connexion">Mot De Passe</label>
@@ -339,7 +340,7 @@ function Panier() {
                                 </div>
                                 <div className="container row row-left">
                                     <label className="label container row row-left" for="tel">Téléphone</label>
-                                    <input required className="container row row-left" id="tel" pattern="[0-9]{12}" type="tel" placeholder="Format: 221777777777" />
+                                    <input required className="container row row-left" id="tel" pattern="[0-9]{12}" type="tel" placeholder="Format: 773292123" />
                                 </div>
                             </div>
                             <button type="submit" onClick={(e) => { inscription(e) }} style={{ marginTop: "25px" }} className="fr-btn">Suivant {' >'}</button>

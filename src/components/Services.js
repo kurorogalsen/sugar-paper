@@ -9,24 +9,24 @@ function Services() {
             </div>
             <div className="container row">
                 <div className="service-img col-6 col-sm-4 col-md-3 col-xl-2">
-                    <img src="https://galsendigitalagency.com/sugar-paper/4.png" alt="" />
+                    <img src="https://sugar-paper.com/Images/4.png" alt="" />
                     <p>Vente de kit imprimante alimentaire </p>
                 </div>
                 <div className="service-img col-6 col-sm-4 col-md-3 col-xl-2">
-                    <img src="https://galsendigitalagency.com/sugar-paper/5.png" alt="" />
-                    <p>impression sur feuille comestible </p>
+                    <img src="https://sugar-paper.com/Images/5.png" alt="" />
+                    <p>Impression sur feuille comestible </p>
                 </div>
                 <div className="service-img col-6 col-sm-4 col-md-3 col-xl-2">
-                    <img src="https://galsendigitalagency.com/sugar-paper/6.png" alt="" />
+                    <img src="https://sugar-paper.com/Images/6.png" alt="" />
                     <p>Produits comestibles  </p>
                 </div>
                 <div className="service-img col-6 col-sm-4 col-md-3 col-xl-2">
-                    <img src="https://galsendigitalagency.com/sugar-paper/7.png" alt="" />
-                    <p>Produits non comestibles </p>
+                    <img src="https://sugar-paper.com/Images/7.png" alt="" />
+                    <p>Outils de pâtisserie </p>
                 </div>
                 <div className="service-img col-6 col-sm-4 col-md-3 col-xl-2">
-                    <img src="https://galsendigitalagency.com/sugar-paper/8.png" alt="" />
-                    <p>vente Cartouches alimentaires </p>
+                    <img src="https://sugar-paper.com/Images/8.png" alt="" />
+                    <p>Vente Cartouches alimentaires </p>
                 </div>
             </div>
         </div>

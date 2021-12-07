@@ -2,8 +2,8 @@ import React from 'react';
 import omar from "./../assets/omar.jpeg";
 function Propos() {
     return (
-        <div id="propos" className="container column" style={{padding: "10px", marginTop: "25px", marginBottom: "25px"}}>
-            <img style={{borderRadius:"100%", border:"5px solid var(--primary-color)", margin:"10px"}} className="col-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2" src={omar} alt="Omar" />
+        <div id="propos" className="container column" style={{ padding: "10px", marginTop: "25px", paddingBottom: "25px" }}>
+            <img style={{ borderRadius: "100%", border: "5px solid var(--primary-color)", margin: "10px" }} className="col-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2" src={omar} alt="Omar" />
             <div className="title container row">
                 <h3>Omar</h3>
             </div>

@@ -6,6 +6,7 @@ import Panier from "./pages/Panier";
 import Admin from "./pages/Admin";
 import ScrollToTop from "./components/ScrollToTop";
 import Errorhttp from "./pages/Errorhttp";
+import Search from "./components/Search";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import React from "react";
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path="/admin" exact>
             <Admin />
+          </Route>
+          <Route path="/search/:name" exact>
+            <Search />
           </Route>
           <Route path="/catalogue/:name" exact>
             <Catalogue />

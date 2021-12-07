@@ -26,8 +26,13 @@ function Header() {
     localStorage[article.id] ? total += localStorage[article.id] * article.prix_article : ""
   ))
 
+  const [loading_recherche, setLoading_recherche] = useState(false)
+  const [recherche, setRecherche] = useState("")
   function rechercher(e) {
     e.preventDefault();
+    let recherche_value = document.getElementById("recherche_value").value;
+    setRecherche(recherche_value);
+    setLoading_recherche(!recherche);
   }
   return (
     <header id="header" className="container column">
@@ -45,10 +50,13 @@ function Header() {
         <img width="75" src={logo} alt="Logo Sugar Paper" />
 
         <form className="row-between" id="search-bar">
-          <input type="search" placeholder="Rechercher un produit..." />
-          <button type="submit">
-            <img onClick={(e) => { rechercher(e) }} width="20" src={loupe} alt="loupe" />
-          </button>
+          <input id="recherche_value" onChange={(e) => { rechercher(e) }} type="search" placeholder="Rechercher un produit..." />
+          <Link to={loading_recherche ? "/search/" + recherche : "/search/" + recherche}>
+            <button style={{border: "none", outline: "none", backgroundColor: "transparent", cursor: "pointer"}} type="submit">
+              <img width="20" src={loupe} alt="loupe" />
+            </button>
+          </Link>
+
         </form>
 
         <div id="header-pan" className="row">

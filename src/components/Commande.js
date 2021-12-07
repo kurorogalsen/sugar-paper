@@ -5,7 +5,7 @@ function Commande() {
 
     function malformedJSON2Array(tar) {
         let arr = [];
-        tar = tar.replace(/^\{|\}$/g, '').split(',');
+        tar = tar.replace(/^\{|\}$/g, '').split(';');
         for (var i = 0, cur, pair; cur = tar[i]; i++) {
             arr[i] = {};
             pair = cur.split(':');
@@ -13,6 +13,11 @@ function Commande() {
         }
         return arr;
     }
+
+    const objecttest = '[{ "id": "0", "txt": "zero"},{ "id": "1", "txt": "one"}]';
+
+    let affff = JSON.parse(objecttest);
+    console.log(affff);
 
     const [loading, setLoading] = useState(true);
     const [commande, setCommande] = useState([])
@@ -96,7 +101,8 @@ function Commande() {
                                     <div style={{ borderBottom: "1px solid black", padding: "10px 0px" }} className="container row row-left">
                                         ID : {commande.id} <br />
                                         Mode de paiement : {commande.mode_paiement} <br />
-                                        Statut : {commande.status}
+                                        Statut : {commande.status} <br />
+                                        Date: {commande.created_at}
                                     </div>
                                     <div style={{ borderBottom: "1px solid black", padding: "10px 0px" }} lassName="container row row-left">
                                         <h4 style={{ textDecoration: "underline" }}>Informations sur le client:</h4>

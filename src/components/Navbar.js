@@ -47,7 +47,7 @@ function Navbar() {
       </div>
       <ul className="container row" id="navbar">
         <li className="fr-li">
-          <Link to="/home"> ACCUEIL </Link>
+          <Link to="/"> ACCUEIL </Link>
         </li>
         <li className="fr-li">
           <Linkscroll to="services" smooth={true} duration={1000}>
@@ -95,7 +95,7 @@ function Navbar() {
           <li className="fr-li"> SERVICES </li>
         </Linkscroll>
 
-        
+
         {ctgList === null ? " " : <DynamicMobLinks list={ctgList} />}
 
         <Linkscroll
