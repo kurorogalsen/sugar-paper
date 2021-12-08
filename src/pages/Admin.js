@@ -4,19 +4,21 @@ import { useState } from "react";
 import "./../styles/admin.css";
 
 function Admin() {
-  const password = "passer";
+  const password = "sugarpaperazerty123";
+  const username = "sugarpaperadmin";
   const [auth, setAuth] = useState(false);
   const passwordSubmit = (e) => {
     e.preventDefault();
-    if (document.getElementById("passwordInput")) {
+    if (document.getElementById("passwordInput") && document.getElementById("usernameInput")) {
       let passInput = document.getElementById("passwordInput").value;
-      if (passInput === password) {
+      let nameInput = document.getElementById("usernameInput").value;
+      if (passInput === password && nameInput === username) {
         return setAuth(!auth);
       }
     }
   };
 
-  return (/* 
+  return (
     <main className="container column" id="admin">
       {auth ? (
         <AdminHome />
@@ -26,7 +28,7 @@ function Admin() {
             <div className="title container row">
               <h3>Connexion</h3>
             </div>
-            <input id="usernameInput" type="password" placeholder="Username" />
+            <input id="usernameInput" type="text" placeholder="Username" />
             <input id="passwordInput" type="password" placeholder="Password" />
             <br />
             <button className="fr-btn" type="submit" onClick={passwordSubmit}>
@@ -35,10 +37,6 @@ function Admin() {
           </form>
         </div>
       )}
-    </main> */
-
-    <main className="container column" id="admin">
-        <AdminHome />
     </main>
   );
 }

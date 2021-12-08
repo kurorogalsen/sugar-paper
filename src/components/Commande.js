@@ -3,22 +3,6 @@ import axios from "axios";
 
 function Commande() {
 
-    function malformedJSON2Array(tar) {
-        let arr = [];
-        tar = tar.replace(/^\{|\}$/g, '').split(';');
-        for (var i = 0, cur, pair; cur = tar[i]; i++) {
-            arr[i] = {};
-            pair = cur.split(':');
-            arr[i][pair[0]] = /^\d*$/.test(pair[1]) ? +pair[1] : pair[1];
-        }
-        return arr;
-    }
-
-    /* const objecttest = '[{"id_article": 13, "quantite": 1}, {"id_article": 14, "quantite": 2}, {"id_article": 15, "quantite": 3}]';
- 
-    let affff = JSON.parse(objecttest);
-    console.log(affff[0].id_article); */
-
     const [loading, setLoading] = useState(true);
     const [commande, setCommande] = useState([])
     const [client, setClient] = useState([])
@@ -41,23 +25,11 @@ function Commande() {
         setRefresh(false)
         fetchData();
     }, [refresh]);
-    /* 
-        useEffect(() => {
-            for (let i = 0; i < commande.length; i++) {
-                setArticlecommande(malformedJSON2Array(commande[i].articles))
-            }
-            console.log(articlecommande);
-        }, [commande]); */
-
 
     useEffect(() => {
-        /* setArticlecommande(JSON.parse(commande.articles)) */
         for (let i = 0; i < commande.length; i++) {
-            console.log(commande[i].articles);
-            articlecommande[i] = JSON.parse(commande[i].articles);
-            console.log(articlecommande[i]);
+            articlecommande[commande[i].id] = JSON.parse(commande[i].articles);
         }
-
         setRefreshArticlecommande(!refreshArticlecommande);
     }, [commande]);
 
@@ -109,8 +81,8 @@ function Commande() {
                 <div className="container row row-left row-top">
                     {
                         commande.map((commande) => (
-                            <div style={{ padding: "10px 4px" }} className="col-12 col-sm-6 col-lg-5 col-xxl-4 column">
-                                <div key={commande.id} className="command-card container column commande-card">
+                            <div key={commande.id} style={{ padding: "10px 4px" }} className="col-12 col-sm-6 col-lg-5 col-xxl-4 column">
+                                <div className="command-card container column commande-card">
                                     <div style={{ borderBottom: "1px solid black", padding: "10px 0px" }} className="container row row-left">
                                         ID : {commande.id} <br />
                                         Mode de paiement : {commande.mode_paiement} <br />
@@ -121,7 +93,7 @@ function Commande() {
                                         <h4 style={{ textDecoration: "underline" }}>Informations sur le client:</h4>
                                         {client.map((account) => (
                                             account.id === commande.id_client ?
-                                                <div className="container row row-left">
+                                                <div key={account.id} className="container row row-left">
                                                     <div className="container row row-left">
                                                         Nom complet : {account.prenom_nom_client}
                                                     </div>
@@ -142,28 +114,17 @@ function Commande() {
                                         <h4 style={{ textDecoration: "underline" }}>Articles commandés:</h4>
 
                                         {
-                                            refreshArticlecommande ?
-                                                articlecommande[0].map((item) => (
-                                                    article.map((produit) => (
-                                                        produit.id === item.id_article ?
-                                                            <div style={{ padding: "5px" }} className="container row row-left">
-                                                                <img style={{ padding: "5px" }} width="30" src={produit.url_img_article} alt={produit.nom_article} />
-                                                                {produit.nom_article} ( {item.quantite} ) = {item.quantite * produit.prix_article}
-                                                            </div>
-                                                            : ""
-                                                    ))
+                                            refreshArticlecommande && articlecommande[commande.id] !== undefined &&
+                                            articlecommande[commande.id].map((item) => (
+                                                article.map((produit) => (
+                                                    produit.id === item.id_article ?
+                                                        <div key={produit.id} style={{ padding: "5px" }} className="container row row-left">
+                                                            <img style={{ padding: "5px" }} width="30" src={produit.url_img_article} alt={produit.nom_article} />
+                                                            {produit.nom_article} ( {item.quantite} ) = {item.quantite * produit.prix_article}
+                                                        </div>
+                                                        : ""
                                                 ))
-                                                :
-                                                articlecommande[0].map((item) => (
-                                                    article.map((produit) => (
-                                                        produit.id === item.id_article ?
-                                                            <div style={{ padding: "5px" }} className="container row row-left">
-                                                                <img style={{ padding: "5px" }} width="30" src={produit.url_img_article} alt={produit.nom_article} />
-                                                                {produit.nom_article} ( {item.quantite} ) = {item.quantite * produit.prix_article}
-                                                            </div>
-                                                            : ""
-                                                    ))
-                                                ))
+                                            ))
                                         }
                                     </div>
                                     <div style={{ borderBottom: "1px solid black", padding: "10px 0px" }} className="container row row-left">

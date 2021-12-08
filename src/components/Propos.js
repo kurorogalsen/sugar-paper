@@ -1,5 +1,5 @@
 import React from 'react';
-import omar from "./../assets/omar.jpeg";
+import omar from "./../assets/omar.webp";
 function Propos() {
     return (
         <div id="propos" className="container column" style={{ padding: "10px", marginTop: "25px", paddingBottom: "25px" }}>

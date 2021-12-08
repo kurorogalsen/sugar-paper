@@ -14,11 +14,7 @@ function Navbar() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: response } = await axios.get('https://sugar-paper.com/categorie', {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          }
-        });
+        const { data: response } = await axios.get('https://sugar-paper.com/categorie');
         setData(response);
       } catch (error) {
         console.error(error.message);
@@ -74,7 +70,7 @@ function Navbar() {
       </ul>
 
       <ul onClick={changeMenu} className="container column" id="mob-navbar">
-        <img width="35" id="mb-menu-logo" src={logo} alt="la françoise" />
+        <img width="35" id="mb-menu-logo" src={logo} alt="Sugar paper" />
         <img
           onClick={changeMenu}
           id="exit-btn"

@@ -52,7 +52,7 @@ function Header() {
         <form className="row-between" id="search-bar">
           <input id="recherche_value" onChange={(e) => { rechercher(e) }} type="search" placeholder="Rechercher un produit..." />
           <Link to={loading_recherche ? "/search/" + recherche : "/search/" + recherche}>
-            <button style={{border: "none", outline: "none", backgroundColor: "transparent", cursor: "pointer"}} type="submit">
+            <button style={{ border: "none", outline: "none", backgroundColor: "transparent", cursor: "pointer" }} type="submit">
               <img width="20" src={loupe} alt="loupe" />
             </button>
           </Link>
@@ -61,9 +61,11 @@ function Header() {
 
         <div id="header-pan" className="row">
           <Link to="/panier">
-            <img width="20" src={cart} alt="panier" />
+            <div className="row row-between" style={{color: "black"}}>
+              <img width="20" src={cart} alt="panier" />
+              <div id="total-panier">{total} {'CFA'}</div>
+            </div>
           </Link>
-          <div id="total-panier">{total} {'CFA'}</div>
         </div>
 
         <div id="header-sm" className="row">

@@ -1,32 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import "./../styles/testimonials.css";
-import img0 from "./../assets/client/0.png";
-import img1 from "./../assets/client/1.png";
-import img2 from "./../assets/client/2.png";
 
 function Testimonials() {
   let i = 0;
   const testimonials = [
-    {
-      id: 0,
-      author: "Fatima",
-      url_author: null,
-      text:
-        "J'ai été totalement satisfaite du service. Je vous le recommende fortement!",
-    },
-    {
-      id: 1,
-      author: "Abdoul",
-      url_author: null,
-      text: "Service très rapide et de qualité, je n'ai jamais été déçu.",
-    },
-    {
-      id: 2,
-      author: "Soxna",
-      url_author: null,
-      text: "Les vêtements sont de haute qualité, il n'y a rien à dire.",
-    },
     {
       id: 3,
       author: "Aziz",

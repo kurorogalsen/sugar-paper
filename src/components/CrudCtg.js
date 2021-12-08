@@ -11,11 +11,7 @@ function CrudCtg() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const { data: response } = await axios.get('https://sugar-paper.com/categorie', {
-                    headers: {
-                        'Access-Control-Allow-Origin': '*',
-                    }
-                });
+                const { data: response } = await axios.get('https://sugar-paper.com/categorie');
                 setData(response);
             } catch (error) {
                 console.error(error.message);
@@ -27,7 +23,6 @@ function CrudCtg() {
     }, [refresh]);
 
     function ajouterCtg(e) {
-
         e.preventDefault();
         let ctg_name = document.getElementById("ctg-name").value;
         axios.post('https://sugar-paper.com/categorie', {

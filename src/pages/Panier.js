@@ -154,7 +154,6 @@ function Panier() {
         // GET request using axios inside useEffect React hook
         axios.get('https://sugar-paper.com/client')
             .then(response => setAccountlist(response.data));
-        console.log(accountlist);
     }, [account]);
 
     const [articlepanier, setArticlepanier] = useState([])
@@ -235,7 +234,7 @@ function Panier() {
 
             <div id="popup_commande">
                 Votre commande a été envoyé. Vous allez bientôt être contacté! <br />
-                <div onClick={(e) => { fermerPopup(e) }} style={{ textDecoration: "underline" }}>
+                <div onClick={(e) => { fermerPopup(e) }} style={{ textDecoration: "underline", cursor: "pointer" }}>
                     Fermer
                 </div>
             </div>
@@ -311,11 +310,11 @@ function Panier() {
                         <h3>CONNEXION</h3>
                         <form className="col-12 col-md-9 col-lg-8 col-xl-7 col-xxl-6 row">
                             <div className="container row row-left">
-                                <label className="label container row row-left" for="tel_connexion">Téléphone</label>
+                                <label className="label container row row-left" htmlFor="tel_connexion">Téléphone</label>
                                 <input required className="container row row-left" id="tel_connexion" pattern="[0-9]{12}" type="tel" placeholder="Format: 773292123" />
                             </div>
                             <div className="container row row-left">
-                                <label className="label container row row-left" for="password_connexion">Mot De Passe</label>
+                                <label className="label container row row-left" htmlFor="password_connexion">Mot De Passe</label>
                                 <input required className="container row row-left" id="password_connexion" type="password" placeholder="Mot de passe" />
                             </div>
                             <button type="submit" onClick={(e) => { LookingAccount(e) }} style={{ marginTop: "25px" }} className="fr-btn">Suivant {' >'}</button>
@@ -330,15 +329,15 @@ function Panier() {
                         <form style={{ display: `${valid ? "none" : "flex"}` }} className="col-12 col-md-9 col-lg-8 col-xl-7 col-xxl-6 row row-top">
                             <div className="column column-top col-12 col-md-6">
                                 <div className="container row row-left">
-                                    <label className="label container row row-left" for="nom">Nom Complet</label>
+                                    <label className="label container row row-left" htmlFor="nom">Nom Complet</label>
                                     <input required className="container row row-left" id="nom" type="text" placeholder="Nom complet..." />
                                 </div>
                                 <div className="container row row-left">
-                                    <label className="label container row row-left" for="mail">Mail</label>
+                                    <label className="label container row row-left" htmlFor="mail">Mail</label>
                                     <input required className="container row row-left" id="mail" type="email" placeholder="Email..." />
                                 </div>
                                 <div className="container row row-left">
-                                    <label className="label container row row-left" for="password">Mot De Passe</label>
+                                    <label className="label container row row-left" htmlFor="password">Mot De Passe</label>
                                     <input required className="container row row-left" id="password" type="password" placeholder="Mot de passe..." />
                                     <div style={{ color: "rgba(0, 0, 0, 0.544)", fontSize: "0.7rem", textAlign: "left", padding: "10px" }} className="container row row-left">
                                         ⚠️ : Vous êtes en train de créer un mot de passe, assurez vous de vous en rappeler
@@ -347,11 +346,11 @@ function Panier() {
                             </div>
                             <div className="column column-top col-12 col-md-6">
                                 <div className="container row row-left">
-                                    <label className="label container row row-left" for="adresse">Adresse Physique</label>
+                                    <label className="label container row row-left" htmlFor="adresse">Adresse Physique</label>
                                     <input required className="container row row-left" id="adresse" type="text" placeholder="Adresse physique..." />
                                 </div>
                                 <div className="container row row-left">
-                                    <label className="label container row row-left" for="tel">Téléphone</label>
+                                    <label className="label container row row-left" htmlFor="tel">Téléphone</label>
                                     <input required className="container row row-left" id="tel" pattern="[0-9]{12}" type="tel" placeholder="Format: 773292123" />
                                 </div>
                             </div>

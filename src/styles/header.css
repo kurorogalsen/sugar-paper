@@ -26,7 +26,10 @@
   font-size: 0.8rem;
 }
 #header-pan > a {
-  padding-right: 25px;
+  padding: 0px 3px;
+}
+#header-pan > a > * > *{
+  margin: 0px 5px;
 }
 #main-header > * {
   margin-right: 50px;

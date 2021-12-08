@@ -132,11 +132,6 @@ function CrudArticle() {
                                 ))
                             }
                         </select>
-                        {/*                         
-                        <label for="id_ctg_collection">Collection</label>
-                        <select >
-                            <option id="id_ctg_collection" name="id collection" value="autres" selected>Autres</option>
-                        </select> */}
                     </div>
                     <div className="container row row-right">
 
@@ -174,10 +169,6 @@ function CrudArticle() {
                                 ))
                             }
                         </select>
-                        {/* <label for="article-collection-add">Collection</label>
-                        <select id="article-collection-add">
-                            <option name="id collection" value="autres" selected>Autres</option>
-                        </select> */}
                     </div>
                     <div className="container row row-right">
                         <label for="article-img-add">URL Image</label>
@@ -215,7 +206,7 @@ function CrudArticle() {
                                         </div>
                                         {totalCtg.map((ctg) => (
                                             ctg.id === element.id_categorie ?
-                                                <div style={{ padding: "5px" }} key={ctg.id} className="container row row-left">
+                                                <div key={ctg.id} style={{ padding: "5px" }} className="container row row-left">
                                                     Nom Catégorie : {ctg.nom_categorie}
                                                 </div>
                                                 : ""
