@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6a155993.chunk.css",
+    "main.js": "/static/js/main.85f9660f.chunk.js",
+    "main.js.map": "/static/js/main.85f9660f.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.73d538be.js",
+    "runtime-main.js.map": "/static/js/runtime-main.73d538be.js.map",
+    "static/js/2.5fc49ec2.chunk.js": "/static/js/2.5fc49ec2.chunk.js",
+    "static/js/2.5fc49ec2.chunk.js.map": "/static/js/2.5fc49ec2.chunk.js.map",
+    "static/js/3.793a5185.chunk.js": "/static/js/3.793a5185.chunk.js",
+    "static/js/3.793a5185.chunk.js.map": "/static/js/3.793a5185.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.6a155993.chunk.css.map": "/static/css/main.6a155993.chunk.css.map",
+    "static/js/2.5fc49ec2.chunk.js.LICENSE.txt": "/static/js/2.5fc49ec2.chunk.js.LICENSE.txt",
+    "static/media/starter.css": "/static/media/Lovelo Black.6da216b7.otf",
+    "static/media/notloading.400e4166.webp": "/static/media/notloading.400e4166.webp"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.73d538be.js",
+    "static/js/2.5fc49ec2.chunk.js",
+    "static/css/main.6a155993.chunk.css",
+    "static/js/main.85f9660f.chunk.js"
+  ]
+}
